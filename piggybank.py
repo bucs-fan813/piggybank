@@ -45,7 +45,7 @@ if __name__ == "__main__":
             raise
         print(f"Statement directory already exists: {STATEMENTS_DIRECTORY}")
 
-    statements = [f for f in listdir(STATEMENTS_DIRECTORY) if isfile(join(STATEMENTS_DIRECTORY, f))]
+    statements = [f for f in listdir(STATEMENTS_DIRECTORY) if not f.startswith(".") and isfile(join(STATEMENTS_DIRECTORY, f))]
     for statement in statements:
         with pdfplumber.open(f"{STATEMENTS_DIRECTORY}/{statement}") as pdf:
             DEPOSITS = []
