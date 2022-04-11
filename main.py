@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     if period == EXPORT_PERIOD.STATEMENT:
         for statement in statements:
-            print_transactions(statement["data"], EXPORT_FORMAT.TABLE,)
+            print_transactions(statement["data"], EXPORT_FORMAT.TABLE)
     else:
         for statement in statements:
             transactions += statement["data"]
