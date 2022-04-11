@@ -3,7 +3,7 @@ import re
 
 from typing import List
 from datetime import datetime
-from common.functions import extract_tags, isDeductable
+from common.functions import extract_tags, is_deductible
 
 START_DATE = ""
 END_DATE = ""
@@ -54,7 +54,7 @@ def parse_transactions(section: str) -> list:
         tx_description = re.sub(r'[\s]+', ' ', match[6]).strip()  # Replace all types of whitespaces with a single space
         tags = extract_tags(tx_description)
         # if tx_type in ["USAA FUNDS TRANSFER DB","ATM DB NONLOCAL"]: continue
-        tx_deductible = isDeductable(tags)
+        tx_deductible = is_deductible(tags)
         transactions.append({
             "Date": tx_date,
             "Amount": tx_amount,
