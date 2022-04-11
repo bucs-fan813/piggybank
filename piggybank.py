@@ -30,8 +30,8 @@ if __name__ == "__main__":
         if e.errno != errno.EEXIST:
             raise
 
-    statements = [f for f in listdir(STATEMENTS_DIRECTORY) if
-                  not f.startswith(".") and isfile(join(STATEMENTS_DIRECTORY, f))]
+    statements = list(filter(lambda x: x.casefold().endswith('.pdf'), os.listdir(STATEMENTS_DIRECTORY)))
+
     transactions = []
     try:
         for statement in statements:
