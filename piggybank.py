@@ -33,29 +33,21 @@ if __name__ == "__main__":
     statements = list(filter(lambda x: x.casefold().endswith('.pdf'), os.listdir(STATEMENTS_DIRECTORY)))
 
     transactions = []
-    try:
-        for statement in statements:
-            with pdfplumber.open(f"{STATEMENTS_DIRECTORY}/{statement}") as pdf:
-                provider = [item.name for item in IMPORT_PROVIDER if item.value in pdf.metadata["Producer"]][0]
-                if not provider:
-                    raise ValueError("Provider not found")
+    for statement in statements:
+        with pdfplumber.open(f"{STATEMENTS_DIRECTORY}/{statement}") as pdf:
+            provider = [item.name for item in IMPORT_PROVIDER if item.value in pdf.metadata["Producer"]][0]
+            if not provider:
+                raise ValueError("Provider not found")
 
-                p = importlib.import_module(f"providers.{provider}", package=None)
-                metadata = {
-                    'file_name': os.path.splitext(statement)[0],
-                    'file_extention': os.path.splitext(statement)[1],
-                    'file_type': os.path.splitext(statement)[1].lstrip('.').upper(),
-                    'full_path': f"{STATEMENTS_DIRECTORY}/{statement}",
-                    'total_pages': len(pdf.pages),
-                    'statement_range': p.parse_statement_range(pdf.pages[0])
-                }
-                print(metadata)
-                transactions += p.extract_transactions(pdf.pages)
+            p = importlib.import_module(f"providers.{provider}", package=None)
+            metadata = {
+                'file_name': os.path.splitext(statement)[0],
+                'file_extension': os.path.splitext(statement)[1],
+                'file_type': os.path.splitext(statement)[1].lstrip('.').upper(),
+                'full_path': f"{STATEMENTS_DIRECTORY}/{statement}",
+                'total_pages': len(pdf.pages),
+                'statement_range': p.parse_statement_range(pdf.pages[0])
+            }
+            print(metadata)
+            transactions += p.extract_transactions(pdf.pages)
         print_transactions(transactions, EXPORT_FORMAT.TABLE)
-
-    except ModuleNotFoundError as e:
-        print(e.name)
-    except IndexError as e:
-        print(e)
-    except ValueError as e:
-        print(e)
