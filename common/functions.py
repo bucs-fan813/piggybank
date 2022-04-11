@@ -1,8 +1,8 @@
 import json
-import pdfplumber
-import importlib
 
 import pandas as pd
+from pdfplumber import open
+from importlib import import_module
 from datetime import datetime
 from os.path import splitext, isdir
 
@@ -24,13 +24,13 @@ def extract_tags(text: str) -> list:
 
 
 def read_data(file: str) -> dict:
-    with pdfplumber.open(file) as pdf:
+    with open(file) as pdf:
         provider = list(filter(lambda x: x.value in pdf.metadata["Producer"], IMPORT_PROVIDER))[0].name
 
         if not provider:
             raise ValueError("Provider not found")
 
-        p = importlib.import_module(f"providers.{provider}", package=None)
+        p = import_module(f"providers.{provider}", package=None)
         metadata = {
             'file_name': splitext(file)[0],
             'file_extension': splitext(file)[1],

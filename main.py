@@ -1,5 +1,4 @@
 import errno
-import os
 from os import listdir, makedirs
 from os.path import join, exists, dirname
 
