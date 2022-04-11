@@ -11,9 +11,10 @@ END_DATE = ""
 
 def extract_transactions(pages: List[pdfplumber.page.Page]) -> list:
     transactions = []
+    patterns = 'DEPOSITS AND OTHER CREDITS|OTHER DEBITS'
 
     for page in pages:
-        if re.search(f"DEPOSITS AND OTHER CREDITS|OTHER DEBITS|Beginning Balance|.*>>>$", page.extract_text()):
+        if re.search(patterns, page.extract_text()):
             sections = re.split(patterns, page.extract_text())
             if len(sections) == 2:
                 transactions += parse_transactions(sections[1])  # Deposits
