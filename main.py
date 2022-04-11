@@ -1,11 +1,11 @@
 import errno
 from os import listdir, makedirs
-from os.path import join, exists, dirname
+from os.path import join, exists, dirname, realpath
 
 from common.enums import EXPORT_FORMAT, EXPORT_PERIOD
 from common.functions import print_transactions, read_data
 
-PROJECT_DIRECTORY = dirname(os.path.realpath(__file__))
+PROJECT_DIRECTORY = dirname(realpath(__file__))
 STATEMENTS_DIRECTORY = join(PROJECT_DIRECTORY, "statements")
 OUTPUT_DIRECTORY = join(PROJECT_DIRECTORY, "output")
 period = EXPORT_PERIOD.ALL

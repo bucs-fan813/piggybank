@@ -1,6 +1,6 @@
-import pdfplumber
 import re
 
+from pdfplumber import page
 from typing import List
 from datetime import datetime
 from common.functions import extract_tags, is_deductible
@@ -9,7 +9,7 @@ START_DATE = ""
 END_DATE = ""
 
 
-def extract_transactions(pages: List[pdfplumber.page.Page]) -> list:
+def extract_transactions(pages: List[page.Page]) -> list:
     transactions = []
 
     for page in pages:
@@ -76,7 +76,7 @@ def parse_transactions(section: str) -> list:
     return transactions
 
 
-def parse_statement_range(pdf: pdfplumber.page.Page) -> dict:
+def parse_statement_range(pdf: page.Page) -> dict:
     global START_DATE
     global END_DATE
     text = pdf.extract_text()
