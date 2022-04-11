@@ -1,18 +1,21 @@
 import xlsxwriter
 import json
 import os
+import pdfplumber
+import importlib
+
 import pandas as pd
 from datetime import datetime
 
 from common.constants import Tags
-from common.enums import EXPORT_FORMAT
+from common.enums import EXPORT_FORMAT, EXPORT_PERIOD, IMPORT_PROVIDER
 
 PROJECT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 OUTPUT_DIRECTORY = os.path.abspath(os.path.join(PROJECT_DIRECTORY, os.pardir))
 OUTPUT_DIRECTORY = os.path.join(OUTPUT_DIRECTORY, "output")
 
 
-def isDeductable(text: str) -> bool:
+def is_deductible(text: str) -> bool:
     return False
 
 
@@ -24,7 +27,31 @@ def extract_tags(text: str) -> list:
         return [tags[key] for key in tags.keys() if key.casefold() in text.casefold()]
 
 
-def print_transactions(text, export_format=None):
+def read_data(file: str) -> dict:
+    data = []
+    with pdfplumber.open(file) as pdf:
+        provider = list(filter(lambda x: x.value in pdf.metadata["Producer"], IMPORT_PROVIDER))[0].name
+
+        if not provider:
+            raise ValueError("Provider not found")
+
+        p = importlib.import_module(f"providers.{provider}", package=None)
+        metadata = {
+            'file_name': os.path.splitext(file)[0],
+            'file_extension': os.path.splitext(file)[1],
+            'file_type': os.path.splitext(file)[1].lstrip('.').upper(),
+            'full_path': file,
+            'total_pages': len(pdf.pages),
+            'statement_range': p.parse_statement_range(pdf.pages[0])
+        }
+        print(metadata)
+        return {
+            "metadata": metadata,
+            "data": p.extract_transactions(pdf.pages)
+        }
+
+
+def print_transactions(text: str, export_format=None):
     data = json.loads(json.dumps(text))
     if export_format == EXPORT_FORMAT.JSON:
         print(data)
