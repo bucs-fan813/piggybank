@@ -35,7 +35,8 @@ if __name__ == "__main__":
     transactions = []
     for statement in statements:
         with pdfplumber.open(f"{STATEMENTS_DIRECTORY}/{statement}") as pdf:
-            provider = [item.name for item in IMPORT_PROVIDER if item.value in pdf.metadata["Producer"]][0]
+            provider = list(filter(lambda x: x.value in pdf.metadata["Producer"], IMPORT_PROVIDER))[0].name
+
             if not provider:
                 raise ValueError("Provider not found")
 
