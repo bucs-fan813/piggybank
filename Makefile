@@ -8,8 +8,12 @@ help: ## This info
 	@cat Makefile | grep -E '^[a-zA-Z\/_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo
 
-run: pipenv run python -m main  ## Run main.py
+run: ## Run main.py
+	pipenv run python -m main
 
-test: pipenv run python -m test  ## Run test.py
+test: ## Run test.py
+	pipenv run python -m test
 
-install: pipenv install  ## Run pipenv install
+install: ## Run pipenv install
+	pipenv install
+
