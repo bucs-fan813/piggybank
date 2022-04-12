@@ -39,4 +39,4 @@ if __name__ == "__main__":
     else:
         for statement in statements:
             transactions += statement["data"]
-        print_transactions(transactions, EXPORT_FORMAT.CSV, output_path=OUTPUT_DIRECTORY)
+        print_transactions(transactions, EXPORT_FORMAT.TABLE, output_path=OUTPUT_DIRECTORY)

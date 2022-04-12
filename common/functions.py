@@ -10,15 +10,17 @@ from common.constants import Tags
 from common.enums import EXPORT_FORMAT, IMPORT_PROVIDER
 
 
-# TODO: Not implemented
-def is_deductible(text: str) -> bool:
+def is_deductible(tags: list) -> bool:
+    for tag in tags:
+        if tag in Tags.get_tax_deductable_tags():
+            return True
     return False
 
 
 def extract_tags(text: str) -> list:
     if text is None:
         return []
-    tags = Tags.get_tags()
+    tags = Tags.get_all_tags()
     for _ in tags.keys():
         return [tags[key] for key in tags.keys() if key.casefold() in text.casefold()]
 

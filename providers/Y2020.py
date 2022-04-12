@@ -53,7 +53,6 @@ def parse_transactions(section: str) -> list:
         tx_id = re.sub(r'[\s]+', ' ', match[4]).strip()  # Replace all types of whitespaces with a single space
         tx_description = re.sub(r'[\s]+', ' ', match[6]).strip()  # Replace all types of whitespaces with a single space
         tags = extract_tags(tx_description)
-        # if tx_type in ["USAA FUNDS TRANSFER DB","ATM DB NONLOCAL"]: continue
         tx_deductible = is_deductible(tags)
         transactions.append({
             "Date": tx_date,
