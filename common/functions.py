@@ -58,7 +58,7 @@ def print_transactions(text: str, export_format=None, output_path=None):
         if "Total" in df.columns:
             df = df.reindex(columns=(list([a for a in df.columns if a != 'Total'] + ['Total'])))
         print(df)
-    elif export_format == EXPORT_FORMAT.CSV:
+    elif export_format == EXPORT_FORMAT.SPREADSHEET:
         if output_path is None:
             raise FileExistsError(f"You must provide an \"output_path\" parameter")
         elif not isdir(output_path):

@@ -7,7 +7,7 @@ class EXPORT_FORMAT(str, enum.Enum):
     TEXT = "text"
     JSON = "json"
     TABLE = "table"
-    CSV = "csv"
+    SPREADSHEET = "spreadsheet"
 
 
 class EXPORT_PERIOD(int, enum.Enum):

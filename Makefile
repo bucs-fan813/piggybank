@@ -8,8 +8,14 @@ help: ## This info
 	@cat Makefile | grep -E '^[a-zA-Z\/_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo
 
-run: ## Run main.py
-	pipenv run python -m main
+json: ## send data to stdout in table format
+	pipenv run python -m main --output json
+
+table: ## send data to stdout in table format
+	pipenv run python -m main --output table
+
+sheet: ## send data to Excel spreadsheet file
+	pipenv run python -m main --output spreadsheet
 
 test: ## Run test.py
 	pipenv run python -m test

@@ -1,3 +1,4 @@
+import argparse
 import errno
 from os import listdir, makedirs
 from os.path import join, exists, dirname, realpath
@@ -12,6 +13,13 @@ period = EXPORT_PERIOD.ALL
 transactions = []
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Seed cases and workflow stages through endpoints")
+    parser.add_argument('--output',
+                        type=str,
+                        default=EXPORT_FORMAT.TABLE,
+                        help="Print data to stdout or save to file")
+    args = parser.parse_args()
+
     try:
         if not exists(STATEMENTS_DIRECTORY):
             makedirs(STATEMENTS_DIRECTORY)
@@ -39,4 +47,4 @@ if __name__ == "__main__":
     else:
         for statement in statements:
             transactions += statement["data"]
-        print_transactions(transactions, EXPORT_FORMAT.TABLE, output_path=OUTPUT_DIRECTORY)
+        print_transactions(transactions, export_format=args.output, output_path=OUTPUT_DIRECTORY)
