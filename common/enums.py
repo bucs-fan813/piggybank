@@ -24,3 +24,4 @@ class IMPORT_PROVIDER(str, enum.Enum):
     """
     Y2020 = "CrawfordTech"
     Y2021 = "iText"
+    GA_SOUTH_V1 = "Compart"
