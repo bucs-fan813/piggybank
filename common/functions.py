@@ -54,19 +54,24 @@ def print_transactions(text: str, export_format=None, output_path=None):
         print(data)
     elif export_format == EXPORT_FORMAT.TABLE:
         pd.set_option('display.max_rows', None)
-        print(pd.DataFrame(data))
+        df = pd.DataFrame(data)
+        if "Total" in df.columns:
+            df = df.reindex(columns=(list([a for a in df.columns if a != 'Total'] + ['Total'])))
+        print(df)
     elif export_format == EXPORT_FORMAT.CSV:
         if output_path is None:
             raise FileExistsError(f"You must provide an \"output_path\" parameter")
         elif not isdir(output_path):
             raise FileExistsError(f"Output path ({output_path}) does not exist")
 
-        sheet_name = data[0]["Date"][-4:]
         timestamp = f"{datetime.now():%Y%m%dT%H%M%S}"
         filename = f"{output_path}/{timestamp}.xlsx"
+        df = pd.DataFrame(data)
+        if "Total" in df.columns:
+            df = df.reindex(columns=(list([a for a in df.columns if a != 'Total'] + ['Total'])))
 
         # Create a Pandas Excel writer using XlsxWriter as the engine.
-        writer = pd.ExcelWriter(filename, engine="xlsxwriter")
-        pd.DataFrame(data).to_excel(writer, sheet_name=sheet_name)
+        writer = pd.ExcelWriter(filename, engine="xlsxwriter", engine_kwargs={'options': {'strings_to_numbers': True}})
+        pd.DataFrame(df).to_excel(writer, sheet_name=timestamp)
         writer.save()
         print(f"Created: {filename}")
