@@ -22,6 +22,6 @@ class EXPORT_PERIOD(str, enum.Enum):
 class IMPORT_PROVIDER(str, enum.Enum):
     """Enums for import providers
     """
-    Y2020 = "CrawfordTech"
-    Y2021 = "iText"
+    USAA_V1 = "CrawfordTech"
+    USAA_V2 = "iText"
     GA_SOUTH_V1 = "Compart"
