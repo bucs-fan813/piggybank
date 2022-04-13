@@ -1,5 +1,6 @@
 class Headers:
-    def get_headers(self) -> list:
+    @staticmethod
+    def get_headers() -> list:
         return [
             "Date",
             "Amount",
@@ -12,7 +13,8 @@ class Headers:
 
 
 class Tags:
-    def get_tax_deductable_tags() -> list:
+    @staticmethod
+    def get_tax_deductible_tags() -> list:
         return ['Business Advertising', 'Business Expense', 'Business Phone', 'Business Software',
                 'Business Uniforms', 'Car Payment', 'Car Service', 'Donation', 'Education',
                 'Entertainment', 'Food & Dining', 'Gift', 'Medical',
@@ -21,6 +23,7 @@ class Tags:
                 'Transportation Air', 'Transportation Public', 'Transportation Rental', 'Transportation Service',
                 'Transportation Train', 'Travel', 'Utilities']
 
+    @staticmethod
     def get_all_tags() -> dict:
         return {
             "acorns": "Investment",

@@ -12,7 +12,7 @@ from common.enums import EXPORT_FORMAT, IMPORT_PROVIDER
 
 def is_deductible(tags: list) -> bool:
     for tag in tags:
-        if tag in Tags.get_tax_deductable_tags():
+        if tag in Tags.get_tax_deductible_tags():
             return True
     return False
 
