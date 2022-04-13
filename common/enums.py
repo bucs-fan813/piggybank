@@ -10,8 +10,8 @@ class EXPORT_FORMAT(str, enum.Enum):
     CSV = "csv"
 
 
-class EXPORT_PERIOD(str, enum.Enum):
-    """Enums for import providers
+class EXPORT_PERIOD(int, enum.Enum):
+    """Enums for export periods
     """
     MONTHLY = 1
     YEARLY = 2
