@@ -3,7 +3,7 @@ import errno
 from os import listdir, makedirs
 from os.path import join, exists, dirname, realpath
 
-from common.enums import EXPORT_FORMAT, EXPORT_PERIOD
+from common.enums import EXPORT_FORMAT, EXPORT_PERIOD, IMPORT_PROVIDER
 from common.functions import print_transactions, read_data
 
 PROJECT_DIRECTORY = dirname(realpath(__file__))
@@ -18,6 +18,10 @@ if __name__ == "__main__":
                         type=str,
                         default=EXPORT_FORMAT.TABLE,
                         help="Print data to stdout or save to file")
+    parser.add_argument('--provider',
+                        type=str,
+                        default=None,
+                        help="Specify the service provider name and version")
     args = parser.parse_args()
 
     try:
@@ -39,12 +43,11 @@ if __name__ == "__main__":
 
     files = list(filter(lambda file: file.casefold().endswith('.pdf'), listdir(STATEMENTS_DIRECTORY)))
     files = list(map(lambda file: f"{STATEMENTS_DIRECTORY}/{file}", files))
-    statements = list(map(lambda file: read_data(file), files))
-
+    statements = list(map(lambda file: read_data(file, args.provider), files))
     if period == EXPORT_PERIOD.STATEMENT:
         for statement in statements:
             print_transactions(statement["data"], EXPORT_FORMAT.TABLE)
     else:
         for statement in statements:
             transactions += statement["data"]
-        print_transactions(transactions, export_format=args.output, output_path=OUTPUT_DIRECTORY)
+        print_transactions(transactions, provider=args.provider, export_format=args.output.casefold(), output_path=OUTPUT_DIRECTORY)
