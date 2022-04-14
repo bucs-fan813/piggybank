@@ -1,7 +1,7 @@
-import enum
+from enum import Enum
 
 
-class EXPORT_FORMAT(str, enum.Enum):
+class EXPORT_FORMAT(str, Enum):
     """Enums for export formats
     """
     TEXT = "text"
@@ -10,7 +10,7 @@ class EXPORT_FORMAT(str, enum.Enum):
     SPREADSHEET = "spreadsheet"
 
 
-class EXPORT_PERIOD(int, enum.Enum):
+class EXPORT_PERIOD(int, Enum):
     """Enums for export periods
     """
     MONTHLY = 1
@@ -19,9 +19,10 @@ class EXPORT_PERIOD(int, enum.Enum):
     ALL = 4
 
 
-class IMPORT_PROVIDER(str, enum.Enum):
+class IMPORT_PROVIDER(str, Enum):
     """Enums for import providers
     """
-    USAA_V1 = "CrawfordTech"
-    USAA_V2 = "iText"
-    GA_SOUTH_V1 = "Compart"
+    USAA_V1 = "bank"
+    USAA_V2 = "bank"
+    GA_SOUTH_V1 = "gas"
+    JACKSON_EMC_V1 = "electricity"
