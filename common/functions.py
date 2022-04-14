@@ -25,14 +25,13 @@ def extract_tags(text: str) -> list:
         return [tags[key] for key in tags.keys() if key.casefold() in text.casefold()]
 
 
-def read_data(file: str) -> dict:
+def read_data(file: str, provider: str = None) -> dict:
     with open(file) as pdf:
-        provider = list(filter(lambda x: x.value in pdf.metadata["Producer"], IMPORT_PROVIDER))[0].name
-
+        provider = [item.name for item in IMPORT_PROVIDER if item.name == provider]
         if not provider:
             raise ValueError("Provider not found")
 
-        p = import_module(f"providers.{provider}", package=None)
+        p = import_module(f"providers.{provider[0]}", package=None)
         metadata = {
             'file_name': splitext(file)[0],
             'file_extension': splitext(file)[1],
@@ -48,17 +47,18 @@ def read_data(file: str) -> dict:
         }
 
 
-def print_transactions(text: str, export_format=None, output_path=None):
+def print_transactions(text: str, provider=None, export_format=None, output_path=None):
     data = json.loads(json.dumps(text))
-    if export_format == EXPORT_FORMAT.JSON:
+
+    if export_format == EXPORT_FORMAT.JSON.casefold():
         print(data)
-    elif export_format == EXPORT_FORMAT.TABLE:
+    elif export_format == EXPORT_FORMAT.TABLE.casefold():
         pd.set_option('display.max_rows', None)
         df = pd.DataFrame(data)
         if "Total" in df.columns:
             df = df.reindex(columns=(list([a for a in df.columns if a != 'Total'] + ['Total'])))
         print(df)
-    elif export_format == EXPORT_FORMAT.SPREADSHEET:
+    elif export_format == EXPORT_FORMAT.SPREADSHEET.casefold():
         if output_path is None:
             raise FileExistsError(f"You must provide an \"output_path\" parameter")
         elif not isdir(output_path):
