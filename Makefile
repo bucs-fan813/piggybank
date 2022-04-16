@@ -15,7 +15,7 @@ table: provider=$(if $(p),$(p),0)
 sheet: provider=$(if $(p),$(p),0)
 
 json: ## send data to stdout in table format
-	pipenv run python -m main --output json --provider ${seed}
+	pipenv run python -m main --output json --provider ${provider}
 
 table: ## send data to stdout in table format
 	pipenv run python -m main --output table --provider ${provider}

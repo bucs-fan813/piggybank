@@ -57,6 +57,9 @@ def print_transactions(text: str, provider=None, export_format=None, output_path
         df = pd.DataFrame(data)
         if "Total" in df.columns:
             df = df.reindex(columns=(list([a for a in df.columns if a != 'Total'] + ['Total'])))
+        if "Date" in df.columns:
+            df["Date"] = pd.to_datetime(df["Date"], format='%m/%d/%Y')
+            df = df.sort_values("Date", ascending=True, ignore_index=True)
         print(df)
     elif export_format == EXPORT_FORMAT.SPREADSHEET.casefold():
         if output_path is None:
