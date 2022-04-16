@@ -26,3 +26,4 @@ class IMPORT_PROVIDER(str, Enum):
     USAA_V2 = "bank"
     GA_SOUTH_V1 = "gas"
     JACKSON_EMC_V1 = "electricity"
+    WATER_V1 = "water"
