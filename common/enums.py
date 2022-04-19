@@ -22,8 +22,9 @@ class EXPORT_PERIOD(int, Enum):
 class IMPORT_PROVIDER(str, Enum):
     """Enums for import providers
     """
-    USAA_V1 = "bank"
-    USAA_V2 = "bank"
-    GA_SOUTH_V1 = "gas"
-    JACKSON_EMC_V1 = "electricity"
-    WATER_V1 = "water"
+    USAA_V1 = 1
+    USAA_V2 = 2
+    GA_SOUTH_V1 = 3
+    JACKSON_EMC_V1 = 4
+    WATER_V1 = 5
+    CHASE_V1 = 6
