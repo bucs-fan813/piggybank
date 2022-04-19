@@ -18,10 +18,10 @@ class Tags:
         return ['Business Advertising', 'Business Expense', 'Business Phone', 'Business Software',
                 'Business Uniforms', 'Car Payment', 'Car Service', 'Donation', 'Education',
                 'Entertainment', 'Food & Dining', 'Gift', 'Medical',
-                'Home Improvement', 'Hotel & Lodging', 'Insurance', 'Investment', 'Medical', 'Misc', 'Moving Expense',
+                'Home Improvement', 'Hotel & Lodging', 'Insurance', 'Investment', 'Misc', 'Moving Expense',
                 'Parking', 'Pharmacy', 'Postage & Shipping', 'Rent', 'Savings', 'Shopping', 'Subscription',
                 'Transportation Air', 'Transportation Public', 'Transportation Rental', 'Transportation Service',
-                'Transportation Train', 'Travel', 'Utilities']
+                'Transportation Train', 'Travel', 'Utilities', "Legal Services"]
 
     @staticmethod
     def get_all_tags() -> dict:
@@ -193,7 +193,7 @@ class Tags:
             "shirt": "Clothing",
             "forman mills": "Clothing",
             "secure finger": "Business Expense",
-            "las vegas nv": "Entertainment",
+            "las vegas": "Entertainment",
             "fort belvoir": "Groceries",
             "cafe": "Food & Dining",
             "pusserslanding": "Food & Dining",
@@ -208,5 +208,16 @@ class Tags:
             "bowie bowie": "Misc",
             "stevie p": "Misc",
             "JBM": "Misc",
-            "flyer": "Misc"
+            "flyer": "Misc",
+            "hotel": "Hotel & Lodging",
+            "aircanada": "Transportation Air",
+            "hopper": "Transportation Air",
+            "delta": "Transportation Air",
+            "jetblue": "Transportation Air",
+            "doordash": "Food",
+            "pack-rat": "Moving Expense",
+            "wellex": "Medical",
+            "agoda": "Hotel & Lodging",
+            "marriott": "Hotel & Lodging",
+            "legal":"Legal Services"
         }
