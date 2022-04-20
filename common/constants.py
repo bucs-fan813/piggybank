@@ -18,7 +18,7 @@ class Tags:
         return ['Business Advertising', 'Business Expense', 'Business Phone', 'Business Software',
                 'Business Uniforms', 'Car Payment', 'Car Service', 'Donation', 'Education',
                 'Entertainment', 'Food & Dining', 'Gift', 'Medical',
-                'Home Improvement', 'Hotel & Lodging', 'Insurance', 'Investment', 'Misc', 'Moving Expense',
+                'Home Improvement', 'Hotel & Lodging', 'Insurance', 'Investment', 'Moving Expense',
                 'Parking', 'Pharmacy', 'Postage & Shipping', 'Rent', 'Savings', 'Shopping', 'Subscription',
                 'Transportation Air', 'Transportation Public', 'Transportation Rental', 'Transportation Service',
                 'Transportation Train', 'Travel', 'Utilities', "Legal Services"]
@@ -219,5 +219,13 @@ class Tags:
             "wellex": "Medical",
             "agoda": "Hotel & Lodging",
             "marriott": "Hotel & Lodging",
-            "legal":"Legal Services"
+            "legal": "Legal Services",
+            "law": "Legal Services",
+            "GARY M GILBERT": "Legal Services",
+            "southwes": "Transportation Air",
+            "best buy": "Business Expense",
+            "apple.com": "Business Expense",
+            "homedepot.com": "Home Improvement",
+            "carpets": "Home Improvement",
+            "gift": "Gift"
         }
