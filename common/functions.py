@@ -47,8 +47,10 @@ def read_data(file: str, provider: str = None) -> dict:
         }
 
 
-def print_transactions(text: str, provider=None, export_format=None, output_path=None):
+def print_transactions(text: str, provider=None, export_format=None, is_deductible=False, output_path=None):
     data = json.loads(json.dumps(text))
+    if is_deductible is True:
+        data = list(filter(lambda item: item["Tax Deductible"] is True, data))
 
     if export_format == EXPORT_FORMAT.JSON.casefold():
         print(data)

@@ -12,16 +12,17 @@ help: ## This info
 
 json: provider=$(if $(p),$(p),0)
 table: provider=$(if $(p),$(p),0)
+table: is_deductible=$(if $(d),$(d),0)
 sheet: provider=$(if $(p),$(p),0)
 
 json: ## send data to stdout in table format
 	pipenv run python -m main --output json --provider ${provider}
 
 table: ## send data to stdout in table format
-	pipenv run python -m main --output table --provider ${provider}
+	pipenv run python -m main --output table --provider ${provider} --is_deductible ${is_deductible}
 
 sheet: ## send data to Excel spreadsheet file
-	pipenv run python -m main --output spreadsheet --provider ${provider}
+	pipenv run python -m main --output spreadsheet --provider ${provider} --is_deductible ${is_deductible}
 
 test: ## Run test.py
 	pipenv run python -m test
