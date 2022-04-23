@@ -10,10 +10,8 @@ help: ## This info
 	@cat Makefile | grep -E '^[a-zA-Z\/_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo
 
-json: provider=$(if $(p),$(p),0)
-table: provider=$(if $(p),$(p),0)
-table: is_deductible=$(if $(d),$(d),0)
-sheet: provider=$(if $(p),$(p),0)
+json table sheet: provider=$(if $(p),$(p),0)
+json table sheet: is_deductible=$(if $(d),$(d),0)
 
 json: ## send data to stdout in table format
 	pipenv run python -m main --output json --provider ${provider}
