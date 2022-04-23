@@ -17,7 +17,7 @@ def extract_transactions(pages: List[page.Page]) -> list:
         if page.page_number < 3:
             continue
 
-        sections = re.split(r"PURCHASE[\r\n]?|[\d]{4}\s+Totals.Year.to.Date", page.extract_text(),
+        sections = re.split(r"PURCHASE[\r\n]?|FEES CHARGED[\r\n]|[\d]{4}\s+Totals.Year.to.Date", page.extract_text(),
                             maxsplit=2 | re.IGNORECASE)
         if sections and len(sections) >= 2:
             transactions += parse_transactions(sections[1])  # Deposits
@@ -29,11 +29,14 @@ def extract_transactions(pages: List[page.Page]) -> list:
 
 def parse_transactions(section: str) -> list:
     transactions = []
-    matches = re.findall(r'(\d+/\d+) \s+((?:(?!\d+\.\d+\b).)*)(?:\s*(?!\d+/\d)(\d+(?:\.\d+)*)).*((?:\n(?!\d+\/\d+).*)*)', section)
+    matches = re.findall(
+        r'(\d+\/\d+)\s+((?:(?!\d+[.,]\d+\b).)*)(?:\s*(?!\d+\/\d)(\d+(?:[.,]\d+)*)).*((?:\n(?!\d+\/\d+).*)*)', section)
 
     if matches:
         for match in matches:
-            if match[1].strip().casefold() == "CANADIAN DOLLAR".casefold():
+            if match[1].strip().casefold() == "CANADIAN DOLLAR".casefold() or \
+                    match[1].strip().casefold() == "COLOMBIAN PESO".casefold() or \
+                    match[1].strip().casefold() == "DOMINICAN PESO".casefold():
                 continue
             global START_DATE
             global END_DATE
@@ -54,7 +57,8 @@ def parse_transactions(section: str) -> list:
 
             # TODO: Revise tx_amount grooming
             tx_amount = "{:0.2f}".format(float(match[2].replace(',', ''))) if match[2] else None
-            tx_description = " ".join(re.sub(r'[\s]+', ' ', match[1]).splitlines()).strip() if match[1] else None  # Replace all types of whitespaces with a single space
+            # Replace all types of whitespaces with a single space
+            tx_description = " ".join(re.sub(r'[\s]+', ' ', match[1]).splitlines()).strip() if match[1] else None
 
             tags = extract_tags(tx_description)
             tx_deductible = is_deductible(tags)
